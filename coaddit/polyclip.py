@@ -3,6 +3,21 @@ from numba import njit
 
 
 @njit
+def poly_area(polygon):
+    """
+    get the area of the input polygon
+    """
+    n = polygon.shape[0]
+    area = 0.0
+    for i in range(n):
+        j = (i + 1) % n
+        area += polygon[i][0] * polygon[j][1]
+        area -= polygon[j][0] * polygon[i][1]
+
+    area = np.abs(area) * 0.5
+    return area
+
+@njit
 def is_inside(cp1, cp2, p):
     """
     Returns true if inside
@@ -106,11 +121,20 @@ def test(ntrial=1, pngfile=None, show=False):
     clipped = nclip_poly(sa, ca)
     print('original size:',sa.shape[0],'clipped size:',clipped.shape[0])
 
+    sarea = poly_area(sa)
+    carea = poly_area(ca)
+    clipped_area = poly_area(clipped)
+    print('clip poly area:',carea)
+    print('original area:',sarea,'clipped area:',clipped_area)
+
+
     # more for timing
     if ntrial > 1:
         tm = time.time()
         for i in range(ntrial):
             clipped = nclip_poly(sa, ca)
+            clipped_area = poly_area(clipped)
+
         tm = time.time()-tm
         print('time for %d: %g  time per: %g' % (ntrial,tm, tm/ntrial))
 
@@ -151,5 +175,5 @@ def test(ntrial=1, pngfile=None, show=False):
             plt.write_img(800,800,pngfile)
 
 if __name__=='__main__':
-    test()
+    test(ntrial=1000)
 
