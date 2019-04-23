@@ -1,5 +1,1 @@
 include README.md
-include coaddit/r3d/r2d.h
-include coaddit/r3d/r2d.c
-include coaddit/r3d/v2d.h
-include coaddit/r3d/v2d.c
