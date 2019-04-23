@@ -82,6 +82,7 @@ r2d_real rand_tri_2d(r2d_rvec2 *verts, int nverts, r2d_real minvol) {
 	// guaranteeing a volume of at least minvol (to avoid degenerate cases)
 
     if (nverts != 3) {
+        fprintf(stderr,"verts size %d != 3\n", nverts);
         return 0.0;
     }
 
@@ -127,10 +128,11 @@ Pyr2d_test_raster(PyObject* self, PyObject* args)
     r2d_real area=0.0;
 
     // note the original test mistakenly declared size 4
+    int nverts=3;
     r2d_rvec2 verts[3];
 
     // create a random tet in the unit box
-    area = rand_tri_2d(verts, sizeof(verts), min_area);
+    area = rand_tri_2d(verts, nverts, min_area);
     if (area <= 0.0) {
         status=0;
         goto test_raster_bail;
@@ -182,6 +184,7 @@ Pyr2d_test_raster(PyObject* self, PyObject* args)
     }
 
     status=1;
+
 test_raster_bail:
     free(grid);
     return Py_BuildValue("i", status);
