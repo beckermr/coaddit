@@ -102,3 +102,6 @@ venv.bak/
 
 # mypy
 .mypy_cache/
+
+# cython
+coaddit/r3d/_r3d_interface.c
