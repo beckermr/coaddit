@@ -112,8 +112,9 @@ Pyr2d_test_raster(PyObject* self, PyObject* args)
     // do indeed sum to those of the original input
 
     int status=0;
-    int poly_order=3;
-    int ngrid=17;
+    int poly_order=0;
+    //int ngrid=17;
+    int ngrid=30;
     double min_area=1.0e-8;
     double tol_warn=1.0e-8;
     double tol_fail=1.0e-4;
@@ -192,13 +193,14 @@ Pyr2d_test_raster(PyObject* self, PyObject* args)
     status=1;
 
 test_raster_bail:
-    free(grid);
 
     if (status != 1) {
         return NULL;
     } else {
         double *ptr=NULL;
-        npy_intp i=0, dims[1]={0};
+        npy_intp i=0, j=0, ind=0, dims[2]={0};
+
+        /*
         PyObject* outmom=NULL;
 
         dims[0] = nmom;
@@ -210,6 +212,27 @@ test_raster_bail:
         }
 
         return outmom;
+        */
+        PyObject* outgrid=NULL;
+        dims[0] = ibox[1].i-ibox[0].i;
+        dims[1] = ibox[1].j-ibox[0].j;
+        printf("dims: [%ld, %ld]\n", dims[0], dims[1]);
+        printf("expected: %d got: %ld\n", npix*nmom, dims[0]*dims[1]);
+
+        outgrid=PyArray_ZEROS(2, dims, NPY_DOUBLE, 0);
+
+        ind=0;
+        for (i=0; i<dims[0]; i++) {
+            for (j=0; j<dims[1]; j++) {
+                ptr = (double *)PyArray_GETPTR2(outgrid, i, j);
+                //ptr = (double *)PyArray_GETPTR2(outgrid, j, i);
+                *ptr = grid[ind];
+                ind++;
+            }
+        }
+
+        free(grid);
+        return outgrid;
     }
 
 }
