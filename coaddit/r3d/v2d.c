@@ -244,7 +244,7 @@ void r2d_clamp_ibox(r2d_poly* poly, r2d_dvec2 ibox[2], r2d_dvec2 clampbox[2], r2
 			//memset(ibox, 0, sizeof(ibox));
             // in C the size declared above ibox[2] is not retained, we need to do this
             // factor of 2 explicitly
-			memset(ibox, 0, 2*sizeof(ibox));
+			memset(ibox, 0, 2*sizeof(r2d_dvec2));
 			poly->nverts = 0;
 			return;
 		}
