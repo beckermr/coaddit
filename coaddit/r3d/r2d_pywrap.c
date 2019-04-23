@@ -133,8 +133,10 @@ Pyr2d_test_raster(PyObject* self, PyObject* args)
 
     // create a random tet in the unit box
     area = rand_tri_2d(verts, nverts, min_area);
+
     if (area <= 0.0) {
         status=0;
+        PyErr_SetString(PyExc_RuntimeError, "area too small\n");
         goto test_raster_bail;
     }
     for(v = 0; v < 3; ++v) {
@@ -165,21 +167,20 @@ Pyr2d_test_raster(PyObject* self, PyObject* args)
 
     // make sure the sum of each moment equals the original 
     for(curorder = 0, mind = 0; curorder <= poly_order; ++curorder) {
-        //printf("Order = %d\n", curorder);
         for(i = curorder; i >= 0; --i, ++mind) {
-            //j = curorder - i;
+
             voxsum = 0.0;
-            for(gg = 0; gg < npix; ++gg) voxsum += grid[nmom*gg+mind];
-            //printf(" Int[ x^%d y^%d dV ] original = %.10e, voxsum = %.10e, error = %.10e\n", 
-            //i, j, tmom[mind], voxsum, fabs(1.0 - tmom[mind]/voxsum));
+            for(gg = 0; gg < npix; ++gg) {
+                voxsum += grid[nmom*gg+mind];
+            }
+
             status=assert_eq(tmom[mind], voxsum, tol_fail);
             if (!status) {
+                PyErr_SetString(PyExc_RuntimeError, "moment test failed\n");
                 goto test_raster_bail;
             }
+            // this will print a warning but not considered failure
             status=expect_eq(tmom[mind], voxsum, tol_warn);
-            if (!status) {
-                goto test_raster_bail;
-            }
         }
     }
 
@@ -187,7 +188,12 @@ Pyr2d_test_raster(PyObject* self, PyObject* args)
 
 test_raster_bail:
     free(grid);
-    return Py_BuildValue("i", status);
+
+    if (status != 1) {
+        return NULL;
+    } else {
+        return Py_BuildValue("i", status);
+    }
 
 }
 
