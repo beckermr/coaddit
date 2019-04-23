@@ -46,6 +46,7 @@
 #include <string.h>
 #include <math.h>
 #include <stdint.h>
+#include <stdio.h>
 
 #define wav(va, wa, vb, wb, vr) {			\
 	vr.x = (wa*va.x + wb*vb.x)/(wa + wb);	\
@@ -101,12 +102,21 @@ void r2d_rasterize(r2d_poly* poly, r2d_dvec2 ibox[2], r2d_real* dest_grid, r2d_r
 		}
 
 		// if all three axes are only one raster long, reduce the single raster to the dest grid
-#define gind(ii, jj, mm) (nmom*((ii-ibox[0].i)*gridsz.j+(jj-ibox[0].j))+mm)
+//#define gind(ii, jj, mm) (nmom*(((ii)-ibox[0].i)*gridsz.j+((jj)-ibox[0].j))+(mm))
 		if(dmax == 1) {
 			r2d_reduce(&stack[nstack].poly, moments, polyorder);
 			// TODO: cell shifting for accuracy
-			for(m = 0; m < nmom; ++m)
-				dest_grid[gind(stack[nstack].ibox[0].i, stack[nstack].ibox[0].j, m)] += moments[m];
+			for(m = 0; m < nmom; ++m) {
+                //int tg=gind(stack[nstack].ibox[0].i, stack[nstack].ibox[0].j, m);
+                int ii = stack[nstack].ibox[0].i;
+                int jj = stack[nstack].ibox[0].j;
+
+                int gind = nmom*((ii-ibox[0].i)*gridsz.j+(jj-ibox[0].j))+m;
+
+                printf("m: %d gind: %d\n", m, gind);
+				//dest_grid[gind(stack[nstack].ibox[0].i, stack[nstack].ibox[0].j, m)] += moments[m];
+				dest_grid[gind] += moments[m];
+            }
 			continue;
 		}
 

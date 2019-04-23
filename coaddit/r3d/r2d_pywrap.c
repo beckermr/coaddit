@@ -133,6 +133,7 @@ Pyr2d_test_raster(PyObject* self, PyObject* args)
     r2d_rvec2 verts[3];
 
     // create a random tet in the unit box
+    srand(350);
     area = rand_tri_2d(verts, nverts, min_area);
 
     if (area <= 0.0) {
