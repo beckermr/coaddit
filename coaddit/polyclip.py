@@ -5,7 +5,7 @@ from numba import njit
 @njit
 def is_inside(cp1, cp2, p):
     """
-    Returns true of inside
+    Returns true if inside
     """
     return (
         (cp2[0]-cp1[0])*(p[1]-cp1[1]) > (cp2[1]-cp1[1])*(p[0]-cp1[0])
