@@ -231,6 +231,9 @@ void r2d_get_ibox(r2d_poly* poly, r2d_dvec2 ibox[2], r2d_rvec2 d) {
 	}
 }
 
+// the r2d_dvec2 ibox[2] here is seen by C as r2d_dvec2 *ibox, the [2]
+// is ignored by the compiler
+// good thing this code is never used as far as I can tell
 void r2d_clamp_ibox(r2d_poly* poly, r2d_dvec2 ibox[2], r2d_dvec2 clampbox[2], r2d_rvec2 d) {
 	r2d_int i, nboxclip;
 	r2d_plane boxfaces[4];
@@ -238,7 +241,10 @@ void r2d_clamp_ibox(r2d_poly* poly, r2d_dvec2 ibox[2], r2d_dvec2 clampbox[2], r2
 	memset(boxfaces, 0, sizeof(boxfaces));
 	for(i = 0; i < 2; ++i) {
 		if(ibox[1].ij[i] <= clampbox[0].ij[i] || ibox[0].ij[i] >= clampbox[1].ij[i]) {
-			memset(ibox, 0, sizeof(ibox));
+			//memset(ibox, 0, sizeof(ibox));
+            // in C the size declared above ibox[2] is not retained, we need to do this
+            // factor of 2 explicitly
+			memset(ibox, 0, 2*sizeof(ibox));
 			poly->nverts = 0;
 			return;
 		}
