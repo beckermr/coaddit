@@ -1,6 +1,14 @@
 import os
-from setuptools import setup, find_packages
+import numpy as np
+from setuptools import setup, find_packages, Extension
 
+sources=[
+    'r2d_pywrap.c',
+    'r2d.c',
+    'v2d.c',
+]
+sources = [os.path.join('coaddit/r3d',s) for s in sources]
+ext=Extension("coaddit.r3d._r2d", sources)
 
 with open(os.path.join(os.path.dirname(__file__), "README.md")) as fp:
     long_description = fp.read()
@@ -11,6 +19,8 @@ setup(
     packages=find_packages(),
     install_requires=['numpy', 'cython'],
     include_package_data=True,
+    ext_modules=[ext],
+    include_dirs=np.get_include(),
     author="Matthew R. Becker",
     author_email="becker.mr@gmail.com",
     description=(
