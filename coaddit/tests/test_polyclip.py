@@ -20,7 +20,7 @@ def _area_heron(a, b, c):
 def test_poly_area_triangle():
     rng = np.random.RandomState(seed=10)
     for _ in range(10):
-        poly = rng.uniform(size=(3, 2))
+        poly = 10*(rng.uniform(size=(3, 2)) - 0.5)
 
         a = np.sqrt(
             (poly[0, 0] - poly[1, 0])**2 + (poly[0, 1] - poly[1, 1])**2)
