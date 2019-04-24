@@ -47,8 +47,8 @@ def test_shift(off):
     assert np.allclose(arr, area)
 
 
-# # @pytest.mark.parametrize('off', [-5, -4, -3, -2, -1, 0, 1, 2, 3, 4, 5])
-def test_shift_dims(off=0):
+@pytest.mark.parametrize('off', [-5, -4, -3, -2, -1, 0, 1, 2, 3, 4, 5])
+def test_shift_dims(off):
     # convention here is that last dimension is x then y
     verts = np.zeros((4, 2)) + off
     verts[0, 1] += 0.25
