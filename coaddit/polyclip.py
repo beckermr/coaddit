@@ -58,6 +58,12 @@ def is_simple_poly(polygon):
 def poly_area(polygon):
     """Compute the area of the input polygon.
 
+    This is an implementation of the shoelace formula
+    https://en.wikipedia.org/wiki/Shoelace_formula based
+    on code in a stack overflow discussion
+
+    https://stackoverflow.com/questions/24467972/calculate-area-of-polygon-given-x-y-coordinates
+
     Parameters
     ----------
     polygon : np.ndarray, shape (n_verticies, 2)
@@ -103,7 +109,10 @@ def clip_poly(subject, clip):
     """Clip a possibly non-convex polygon (the subject) against a convex
     polygon (the clip).
 
-    NOTE: This code implements the Sutherland–Hodgman algorithm.
+    NOTE: This code implements the Sutherland–Hodgman algorithm.  The
+    implementation is a numba adaptation of a python implementation
+    at rosettacode
+    https://rosettacode.org/wiki/Sutherland-Hodgman_polygon_clipping
 
     Parameters
     ----------
