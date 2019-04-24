@@ -42,9 +42,7 @@ def rasterize_poly(polygon, delta):
     cell[:, 0] = orig_cell[:, 0] + start_inds[0] * delta
 
     area = poly_area(polygon)
-    grid = np.zeros(
-        (end_inds[0]-start_inds[0]+1, end_inds[1]-start_inds[1]+1),
-        dtype=polygon.dtype)
+    grid = np.zeros((n_i, n_j), dtype=polygon.dtype)
     for i in range(n_i):
         # reset column
         cell[:, 1] = orig_cell[:, 1] + start_inds[1] * delta
