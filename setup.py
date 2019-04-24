@@ -12,7 +12,7 @@ setup(
     include_package_data=True,
     author="Matthew R. Becker and Erin S. Sheldon",
     author_email="becker.mr@gmail.com",
-    description="coadd two-dimensional images using exact pixel intersections",
+    description="coadd two-dimensional images in python",
     license="BSD-3-Clause",
     url="https://github.com/beckermr/coaddit",
     long_description=long_description,
