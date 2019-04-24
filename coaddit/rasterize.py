@@ -34,8 +34,8 @@ def rasterize_poly(polygon, delta):
     end_inds[0] = np.ceil(np.max(polygon[:, 0]/delta))
     end_inds[1] = np.ceil(np.max(polygon[:, 1]/delta))
 
-    n_i = end_inds[0] - start_inds[0] + 1
-    n_j = end_inds[1] - start_inds[1] + 1
+    n_i = end_inds[0] - start_inds[0]
+    n_j = end_inds[1] - start_inds[1]
 
     orig_cell = np.array(
         [[0, 0], [1, 0], [1, 1], [0, 1]], dtype=polygon.dtype) * delta
