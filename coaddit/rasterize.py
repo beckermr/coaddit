@@ -37,7 +37,8 @@ def rasterize_poly(polygon, delta):
     n_i = end_inds[0] - start_inds[0] + 1
     n_j = end_inds[1] - start_inds[1] + 1
 
-    orig_cell = np.array([[0, 0], [1, 0], [1, 1], [0, 1]]) * delta
+    orig_cell = np.array(
+        [[0, 0], [1, 0], [1, 1], [0, 1]], dtype=polygon.dtype) * delta
     cell = np.zeros_like(orig_cell)
     cell[:, 0] = orig_cell[:, 0] + start_inds[0] * delta
 
