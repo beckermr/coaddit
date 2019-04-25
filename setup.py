@@ -8,7 +8,7 @@ setup(
     name="coaddit",
     version="0.1.0",
     packages=find_packages(),
-    install_requires=['numpy', 'numba', 'scipy'],
+    install_requires=['numpy', 'numba', 'scipy', 'esutil'],
     include_package_data=True,
     author="Matthew R. Becker and Erin S. Sheldon",
     author_email="becker.mr@gmail.com",
