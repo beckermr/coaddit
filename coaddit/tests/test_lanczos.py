@@ -4,7 +4,8 @@ import pytest
 from ..lanczos import lanczos_resample
 
 
-def test_lanczos_resample_interp_grid():
+@pytest.mark.parametrize('a', [1, 2, 3, 4, 5])
+def test_lanczos_resample_interp_grid(a):
     rng = np.random.RandomState(seed=10)
     im = rng.normal(size=(11, 25))
 
@@ -13,7 +14,8 @@ def test_lanczos_resample_interp_grid():
             val = lanczos_resample(
                 im,
                 np.array([row], dtype=np.float64),
-                np.array([col], dtype=np.float64))
+                np.array([col], dtype=np.float64),
+                a=a)
             assert np.allclose(val, im[row, col])
 
 
@@ -44,7 +46,8 @@ def test_lanczos_resample_out_of_bounds(row, col):
     val = lanczos_resample(
         im,
         np.array([row], dtype=np.float64),
-        np.array([col], dtype=np.float64))
+        np.array([col], dtype=np.float64),
+        a=3)
     assert np.isnan(val)
 
 
@@ -71,5 +74,6 @@ def test_lanczos_resample_in_bounds(row, col):
     val = lanczos_resample(
         im,
         np.array([row], dtype=np.float64),
-        np.array([col], dtype=np.float64))
+        np.array([col], dtype=np.float64),
+        a=3)
     assert not np.isnan(val)
