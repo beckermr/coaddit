@@ -23,9 +23,11 @@ def lanczos_resample(im, rows, cols, a=3):
     Returns
     -------
     values : np.ndarray
-        The resampled value for each row, column pair.
+        The resampled value for each row, column pair. Points whose
+        interpolation kernal does not touch any part of the grid are
+        returned as NaN.
     """
-    res = np.zeros(rows.shape[0], dtype=im.dtype)
+    res = np.zeros(rows.shape[0], dtype=np.float64)
 
     for i in range(rows.shape[0]):
         y = rows[i]
@@ -36,6 +38,15 @@ def lanczos_resample(im, rows, cols, a=3):
         x_f = int(np.floor(x)) + a
         y_s = int(np.floor(y)) - a + 1
         y_f = int(np.floor(y)) + a
+
+        out_of_bounds = (
+            x_f < 0 or
+            x_s > im.shape[1]-1 or
+            y_f < 0 or
+            y_s > im.shape[0]-1)
+        if out_of_bounds:
+            res[i] = np.nan
+            continue
 
         # clip the kernel to the input image if needed
         x_s = max(0, min(x_s, im.shape[1]-1))
