@@ -9,3 +9,6 @@ from .polyclip import (  # noqa
 
 from . import rasterize  # noqa
 from .rasterize import rasterize_poly  # noqa
+
+from . import lanczos  # noqa
+from .lanczos import lanczos_resample  # noqa
