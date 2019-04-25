@@ -46,6 +46,7 @@ jobs:
               numpy \
               scipy \
               numba \
+              esutil \
               flake8 \
               pytest
             conda update --all -y -q
