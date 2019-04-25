@@ -62,8 +62,8 @@ def lanczos_resample(im, rows, cols, a=3):
                 dx = x - x_pix
                 val += (
                     im[y_pix, x_pix] *
-                    np.sinc(dx) * np.sinc(dx/3) *
-                    np.sinc(dy) * np.sinc(dy/3))
+                    np.sinc(dx) * np.sinc(dx/a) *
+                    np.sinc(dy) * np.sinc(dy/a))
         res[i] = val
 
     return res
