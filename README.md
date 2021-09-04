@@ -2,7 +2,7 @@
 coadd two-dimensional images in python
 
 
-[![CircleCI](https://circleci.com/gh/beckermr/coaddit/tree/master.svg?style=svg)](https://circleci.com/gh/beckermr/coaddit/tree/master)
+[![CircleCI](https://circleci.com/gh/beckermr/coaddit/tree/main.svg?style=svg)](https://circleci.com/gh/beckermr/coaddit/tree/main)
 
 
 ### Licensing
